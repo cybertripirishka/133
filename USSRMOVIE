@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>СОВЕТСКОЕ КИНО | Золотая коллекция</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #e8e8e8;   /* светло-серый фон */
+            font-family: 'Inter', 'Roboto', system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            color: #1e1e1e;
+            line-height: 1.45;
+        }
+
+        /* конструктивистская атмосфера */
+        .page-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: linear-gradient(145deg, #f0f0f0 0%, #dadada 100%);
+            box-shadow: 0 0 30px rgba(0,0,0,0.05);
+        }
+
+        /* красная лента — символ эпохи */
+        .red-stripe {
+            height: 8px;
+            background: #c1202c;
+            background: linear-gradient(90deg, #b0121f, #e03a48, #b0121f);
+        }
+
+        /* шапка */
+        .hero {
+            background: #2a2a2a;   /* тёмно-серый фон для шапки */
+            padding: 2rem 2rem 1.5rem 2rem;
+            text-align: center;
+            border-bottom: 4px solid #c1202c;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', 'Times New Roman', Georgia, serif;
+            font-size: 3.2rem;
+            letter-spacing: 4px;
+            color: #d42e3b;
+            text-transform: uppercase;
+            font-weight: 800;
+            text-shadow: 2px 2px 0 #1a1a1a;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero p {
+            color: #ececec;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            font-weight: 400;
+            border-top: 1px solid #5a5a5a;
+            display: inline-block;
+            padding-top: 0.7rem;
+        }
+
+        /* звезда и орнамент */
+        .soviet-symbol {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1.2rem;
+        }
+        .soviet-symbol span {
+            font-size: 1.8rem;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        /* основная сетка */
+        .films-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+            gap: 2rem;
+            padding: 3rem 2rem;
+            background: #e0e0e0; /* светло-серый с оттенком */
+        }
+
+        /* карточка фильма — тёмно-серый фон */
+        .film-card {
+            background: #2c2c2c;  /* тёмно-серый, почти графит */
+            border-radius: 24px;
+            overflow: hidden;
+            transition: transform 0.25s ease, box-shadow 0.3s ease;
+            box-shadow: 0 12px 20px -10px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #4a4a4a;
+        }
+
+        .film-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 22px 28px -12px black;
+            border-color: #c1202c;
+        }
+
+        /* контейнер изображения */
+        .film-img {
+            height: 380px;
+            overflow: hidden;
+            background: #1e1e1e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 3px solid #c1202c;
+        }
+
+        .film-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+            display: block;
+        }
+
+        .film-card:hover .film-img img {
+            transform: scale(1.02);
+        }
+
+        /* текстовая часть */
+        .film-info {
+            padding: 1.4rem 1.2rem 1.6rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .film-title {
+            font-family: 'Playfair Display', 'Times New Roman', serif;
+            font-size: 1.65rem;
+            font-weight: 700;
+            color: #e03a48;   /* яркий красный */
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.3px;
+            border-left: 4px solid #c1202c;
+            padding-left: 12px;
+        }
+
+        .film-year {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: #b0b0b0;
+            margin-bottom: 0.75rem;
+            letter-spacing: 1px;
+        }
+
+        .film-director {
+            font-size: 0.85rem;
+            color: #cccccc;
+            margin-bottom: 0.9rem;
+            font-style: italic;
+        }
+
+        .film-description {
+            font-size: 0.95rem;
+            line-height: 1.45;
+            color: #f0f0f0;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .film-btn {
+            background: transparent;
+            border: 1.5px solid #c1202c;
+            color: #ffc1c1;
+            padding: 0.5rem 0.8rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: default;   /* имитация, для атмосферы */
+            transition: 0.2s;
+            width: fit-content;
+            background: rgba(193, 32, 44, 0.1);
+        }
+
+        .film-btn:hover {
+            background: #c1202c;
+            color: white;
+            border-color: #c1202c;
+        }
+
+        /* цитатная секция (тёмно-серый блок) */
+        .quote-block {
+            background: #2a2a2a;
+            margin: 0 2rem 2rem 2rem;
+            border-radius: 40px;
+            padding: 1.8rem 2rem;
+            text-align: center;
+            border-left: 6px solid #c1202c;
+            border-right: 6px solid #c1202c;
+        }
+
+        .quote-text {
+            font-size: 1.3rem;
+            font-style: italic;
+            color: #f2f2f2;
+            font-weight: 500;
+            font-family: Georgia, serif;
+        }
+
+        .quote-author {
+            margin-top: 0.7rem;
+            color: #e03a48;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        /* футер */
+        .footer {
+            background: #1f1f1f;
+            color: #bdbdbd;
+            padding: 1.8rem 2rem;
+            text-align: center;
+            font-size: 0.8rem;
+            border-top: 3px solid #c1202c;
+            margin-top: 1rem;
+        }
+
+        .footer a {
+            color: #e05a64;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* адаптивность */
+        @media (max-width: 760px) {
+            .hero h1 {
+                font-size: 2.2rem;
+                letter-spacing: 2px;
+            }
+            .films-grid {
+                padding: 2rem 1rem;
+                gap: 1.5rem;
+            }
+            .film-img {
+                height: 300px;
+            }
+            .quote-block {
+                margin: 0 1rem 2rem 1rem;
+                padding: 1.2rem;
+            }
+            .quote-text {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 1.2rem;
+            }
+            .film-title {
+                font-size: 1.4rem;
+            }
+        }
+
+        /* небольшая сетка для информации об авторстве */
+        .source-note {
+            font-size: 0.7rem;
+            margin-top: 1rem;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+<div class="page-wrapper">
+    <div class="red-stripe"></div>
+
+    <header class="hero">
+        <h1>СОВЕТСКОЕ КИНО</h1>
+        <p>Лучшие фильмы эпохи великих смыслов</p>
+        <div class="soviet-symbol">
+            <span>★</span>
+            <span>☭</span>
+            <span>★</span>
+        </div>
+    </header>
+
+    <main>
+        <!-- сетка с фильмами — все изображения из открытых источников (Wikimedia / Википедия) -->
+        <div class="films-grid">
+            
+            <!-- 1. Броненосец "Потёмкин" -->
+            <div class="film-card">
+                <div class="film-img">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Battleship_Potemkin_poster.jpg" 
+                         alt="Постер фильма Броненосец Потёмкин"
+                         loading="lazy"
+                         onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/ru/1/1b/Bronenosets_Potemkin.jpg';">
+                </div>
+                <div class="film-info">
+                    <div class="film-title">Броненосец «Потёмкин»</div>
+                    <div class="film-year">1925</div>
+                    <div class="film-director">Сергей Эйзенштейн</div>
+                    <div class="film-description">
+                        Эпохальная драма о восстании на броненосце. Революционный шедевр, вошедший в золотой фонд мирового кино. Знаменитая сцена на одесской лестнице.
+                    </div>
+                    <div class="film-btn">Легенда кино</div>
+                </div>
+            </div>
+
+            <!-- 2. Весёлые ребята -->
+            <div class="film-card">
+                <div class="film-img">
+                    <img src="https://upload.wikimedia.org/wikipedia/ru/5/5f/Jolly_Fellows_film_poster.jpg" 
+                         alt="Постер фильма Весёлые ребята"
+                         loading="lazy"
+                         onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Jolly_Fellows_1934.jpg/400px-Jolly_Fellows_1934.jpg';">
+                </div>
+                <div class="film-info">
+                    <div class="film-title">Весёлые ребята</div>
+                    <div class="film-year">1934</div>
+                    <div class="film-director">Григорий Александров</div>
+                    <div class="film-description">
+                        Музыкальная комедия с Леонидом Утёсовым и Любовью Орловой. Песни Дунаевского, искромётный юмор и энергия первых пятилеток.
+                    </div>
+                    <div class="film-btn">Классика жанра</div>
+                </div>
+            </div>
+
+            <!-- 3. Иван Васильевич меняет профессию -->
+            <div class="film-card">
+                <div class="film-img">
+                    <img src="https://upload.wikimedia.org/wikipedia/ru/5/5b/Ivan_Vasilievich_poster.jpg" 
+                         alt="Постер фильма Иван Васильевич меняет профессию"
+                         loading="lazy">
+                </div>
+                <div class="film-info">
+                    <div class="film-title">Иван Васильевич меняет профессию</div>
+                    <div class="film-year">1973</div>
+                    <div class="film-director">Леонид Гайдай</div>
+                    <div class="film-description">
+                        Гениальная фантастическая комедия про царя Ивана Грозного, инженера Тимофеева и вора Жоржа Милославского. «Смерть шпионам!»
+                    </div>
+                    <div class="film-btn">Культ Гайдая</div>
+                </div>
+            </div>
+
+            <!-- 4. Москва слезам не верит -->
+            <div class="film-card">
+                <div class="film-img">
+                    <img src="https://upload.wikimedia.org/wikipedia/ru/c/cd/Moscow_Does_Not_Believe_in_Tears_poster.jpg" 
+                         alt="Постер фильма Москва слезам не верит"
+                         loading="lazy">
+                </div>
+                <div class="film-info">
+                    <div class="film-title">Москва слезам не верит</div>
+                    <div class="film-year">1980</div>
+                    <div class="film-director">Владимир Меньшов</div>
+                    <div class="film-description">
+                        Оскароносная мелодрама о трёх подругах, любви и судьбе. «Москва — это не резиновая», но именно здесь сбываются мечты.
+                    </div>
+                    <div class="film-btn">Обладатель Оскара</div>
+                </div>
+            </div>
+
+            <!-- 5. Сталкер (1979) Тарковский -->
+            <div class="film-card">
+                <div class="film-img">
+                    <img src="https://upload.wikimedia.org/wikipedia/ru/b/b2/Stalker_film_poster.png" 
+                         alt="Постер фильма Сталкер"
+                         loading="lazy">
+                </div>
+                <div class="film-info">
+                    <div class="film-title">Сталкер</div>
+                    <div class="film-year">1979</div>
+                    <div class="film-director">Андрей Тарковский</div>
+                    <div class="film-description">
+                        Философская притча про Зону, комнату желаний и границы человеческой души. Медленное, гипнотическое кино, изменившее язык искусства.
+                    </div>
+                    <div class="film-btn">Авторское кино</div>
+                </div>
+            </div>
+
+            <!-- 6. Служебный роман -->
+            <div class="film-card">
+                <div class="film-img">
+                    <img src="https://upload.wikimedia.org/wikipedia/ru/6/60/Sluzhebnyy_roman_poster.jpg" 
+                         alt="Постер фильма Служебный роман"
+                         loading="lazy">
+                </div>
+                <div class="film-info">
+                    <div class="film-title">Служебный роман</div>
+                    <div class="film-year">1977</div>
+                    <div class="film-director">Эльдар Рязанов</div>
+                    <div class="film-description">
+                        Ироничная лирическая комедия о статистике, «мымре» и любви. Бессмертные фразы, гениальный дуэт Алисы Фрейндлих и Андрея Мягкова.
+                    </div>
+                    <div class="film-btn">Шедевр Рязанова</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- дополнительная секция: атмосферная цитата из советского кино (тёмно-серый блок) -->
+        <div class="quote-block">
+            <div class="quote-text">
+                «Я не волшебник, я только учусь. Но во имя любви к людям я хочу, чтобы кино оставалось праздником!»
+            </div>
+            <div class="quote-author">— из воспоминаний кинематографистов, СССР</div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>★ Золотая коллекция советского кинематографа ★</p>
+        <p style="margin-top: 0.6rem;">Изображения постеров взяты из открытых источников (Википедия / Wikimedia Commons) и используются в информационных целях. </p>
+        <p>Все права на фильмы принадлежат правообладателям. Сайт создан в рамках культурно-просветительской инициативы.</p>
+        <div class="source-note">
+            📽️ «Кино для миллионов, искусство для души» — традиции Мосфильма и Ленфильма
+        </div>
+    </footer>
+    <div class="red-stripe"></div>
+</div>
+
+<!-- небольшой скрипт для защиты от битых ссылок (дополнительно подставит альтернативные постеры) — но основная часть и так надёжна -->
+<script>
+    (function() {
+        // список альтернативных URL на случай, если основные постеры недоступны (из открытых зеркал)
+        const fallbackMap = {
+            'https://upload.wikimedia.org/wikipedia/commons/5/5e/Battleship_Potemkin_poster.jpg': 'https://upload.wikimedia.org/wikipedia/ru/1/1b/Bronenosets_Potemkin.jpg',
+            'https://upload.wikimedia.org/wikipedia/ru/5/5f/Jolly_Fellows_film_poster.jpg': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Jolly_Fellows_1934.jpg/400px-Jolly_Fellows_1934.jpg',
+            'https://upload.wikimedia.org/wikipedia/ru/5/5b/Ivan_Vasilievich_poster.jpg': 'https://m.media-amazon.com/images/M/MV5BZTE0MDVkOGUtYTA5MC00YjU1LTlmMDctYjRkYzUzNzU0YjExXkEyXkFqcGc@._V1_.jpg',
+            'https://upload.wikimedia.org/wikipedia/ru/c/cd/Moscow_Does_Not_Believe_in_Tears_poster.jpg': 'https://upload.wikimedia.org/wikipedia/ru/thumb/c/cd/Moscow_Does_Not_Believe_in_Tears_poster.jpg/300px-Moscow_Does_Not_Believe_in_Tears_poster.jpg',
+            'https://upload.wikimedia.org/wikipedia/ru/b/b2/Stalker_film_poster.png': 'https://upload.wikimedia.org/wikipedia/ru/thumb/b/b2/Stalker_film_poster.png/300px-Stalker_film_poster.png',
+            'https://upload.wikimedia.org/wikipedia/ru/6/60/Sluzhebnyy_roman_poster.jpg': 'https://upload.wikimedia.org/wikipedia/ru/thumb/6/60/Sluzhebnyy_roman_poster.jpg/300px-Sluzhebnyy_roman_poster.jpg'
+        };
+        
+        const images = document.querySelectorAll('.film-img img');
+        images.forEach(img => {
+            const originalSrc = img.getAttribute('src');
+            img.addEventListener('error', function() {
+                if (fallbackMap[originalSrc] && img.src !== fallbackMap[originalSrc]) {
+                    img.src = fallbackMap[originalSrc];
+                } else if (!fallbackMap[originalSrc] && !img.dataset.fallbackTried) {
+                    // универсальный запасной вариант — заглушка с духом советского кино
+                    img.dataset.fallbackTried = 'true';
+                    img.src = 'https://upload.wikimedia.org/wikipedia/commons/9/9e/Soviet_film_clapperboard.svg';
+                    img.alt = 'Постер времен СССР (символ)';
+                }
+            });
+        });
+    })();
+</script>
+</body>
+</html>
